@@ -17,23 +17,59 @@ class CustomUserAdmin(UserAdmin):
             ),
         }),
         
-        ('Permisons', {
+        ('permissions', {
             'fields': (
                 'is_staff','is_active','is_superuser',
             ),
         }),
+
+
+        ('group permissions', {
+            'fields': (
+                'groups','user_permissions',
+            ),
+        }),
+
+        
+        ('important date', {
+            'fields': (
+                'last_login',
+            ),
+        }),
+
     
     )
 
     add_fieldsets = [
         (
-            None,
+            "Add user",
             {
                 "classes": ["wide"],
-                "fields": ["email", "password1", 'password2','is_staff','is_active','is_superuser', ],
+                "fields": ["email", "password1", 'password2', ],
             },
         ),
+
+        (
+            "permissions",
+            {
+                "classes": ["wide"],
+                "fields": ['is_staff','is_active','is_superuser', ],
+            },
+        ),
+
+        (
+            "group permissions",
+            {
+                "classes": ["wide"],
+                "fields": ['groups','user_permissions', ],
+            },
+        ),
+
+        
     ]
 
 
 
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('user','first_name','email',)
