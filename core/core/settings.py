@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Install App.
     'accounts.apps.AccountsConfig',
-    'blog.apps.BlogConfig',
+    #'blog.apps.BlogConfig',
     # Install Package.
 ]
 
@@ -125,3 +125,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# user manger config.
+AUTH_USER_MODEL = 'accounts.User'
