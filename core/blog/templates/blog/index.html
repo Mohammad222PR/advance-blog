@@ -1,0 +1,21 @@
+<h1>hi</h1>
+
+{% for post in post  %}
+    <p>{{post.author}}</p>
+    <a href="{% url 'blog:blog_detail' post.id %}">{{post.title}}</a>
+    <img src="{{post.image.url}}" alt="">
+    <p>{{post.content|truncatewords:10}}</p>
+    
+    
+    {% for tag in post.tag.all %}
+    
+    tag:<p>{{tag.title}}</p>
+    {% endfor%}
+
+    cat:
+    
+    {% for cat in post.category.title %}
+     {{cat}}
+    {% endfor %}
+
+    {% endfor %}

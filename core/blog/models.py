@@ -24,8 +24,8 @@ class Post(models.Model):
     title = models.CharField(max_length=10000)
     image = models.ImageField(upload_to='images/posts', null=True, blank=True)
     content = models.TextField(max_length=1000000000)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    tag = models.ManyToManyField(Tag)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='post')
+    tag = models.ManyToManyField(Tag, related_name='post')
     status = models.BooleanField(default=True)
     # Time Field. 
     created_date = models.DateTimeField(auto_now_add=True)

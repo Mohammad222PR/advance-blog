@@ -1,0 +1,16 @@
+
+
+<p>{{post.id}}</p>
+<p>{{post.author}}</p>
+<p>{{post.title}}</p>
+<p>{{post.content}}
+</p>
+<img src="{{post.image.url}}" alt="">
+
+{% for tag in post.tag.all  %}
+    {{tag.title}}
+{% endfor %}
+
+{% for cat in post.category.title  %}
+    {{cat.title}}
+{% endfor %}
