@@ -1,7 +1,8 @@
+from typing import Any
 from django.shortcuts import render
 from django.views import View
 from .models import *
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, RedirectView
 # Create your views here.
 
 class indexView(View):
@@ -22,3 +23,10 @@ class IndexPostDetail(View):
 #         context = super().get_context_data(**kwargs)
 #         context['post'] = Post.objects.all()
 #         return context
+
+
+class IndexRedirect(RedirectView):
+    url = 'blog:redirect'
+
+    def get_redirect_url(self, *args, **kwargs):
+        return super().get_redirect_url(*args, **kwargs)
