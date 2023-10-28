@@ -5,9 +5,10 @@ from django.shortcuts import render
 from django.views import View
 from .models import *
 from django.views.generic.base import TemplateView, RedirectView
-from django.views.generic import ListView, FormView, CreateView
+from django.views.generic import ListView, FormView, CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from .forms import *
+from django.urls import reverse_lazy
 # Create your views here.
 
 # class PostView(View):
@@ -70,7 +71,7 @@ class PostCreateView(CreateView):
     template_name = 'blog/post_create.html'
     model = Post
     fields = ['title','content','category','tag','image']
-    success_url = '/blog/'
+    success_url = reverse_lazy('/blog/')
     
     def form_valid(self, form):
         new_post=form.save(commit=False)
@@ -78,3 +79,10 @@ class PostCreateView(CreateView):
         new_post.status = True
         new_post.save()
         return super().form_valid(form)
+    
+
+class PostUpdateView(UpdateView):
+    template_name = 'blog/post_create'
+    model = Post
+    form_class = PostCreateForm
+    success_url = '/blog/'

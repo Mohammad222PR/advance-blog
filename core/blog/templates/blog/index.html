@@ -4,7 +4,7 @@
   <p>title :  <a href="{% url 'blog:blog_detail' post.id %}">{{post.title}}</a> -- created_date: {{post.created_date|date:"Y-M"}}-- Updated_date: {{post.updated_date|date:"Y-M"}} </p>
   <p>contect: {{post.content|truncatewords:2}}</p>
     <br><br>
-
+    <a href="{% url 'blog:post_update_view' post.id %}">PostUpdate</a>
     {% endfor %}
     <div class="pagination">
       <span class="step-links">
@@ -22,4 +22,6 @@
               <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
           {% endif %}
       </span>
+
+      <a href="{% url 'blog:post_create_view' %}">CreatePost</a>
   </div>
