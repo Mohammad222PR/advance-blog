@@ -5,6 +5,7 @@
   <p>contect: {{post.content|truncatewords:2}}</p>
     <br><br>
     <a href="{% url 'blog:post_update_view' post.id %}">PostUpdate</a>
+    <a href="{% url 'blog:post_delete_view' post.id %}">Delete</a>
     {% endfor %}
     <div class="pagination">
       <span class="step-links">

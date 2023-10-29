@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views import View
 from .models import *
 from django.views.generic.base import TemplateView, RedirectView
-from django.views.generic import ListView, FormView, CreateView, UpdateView
+from django.views.generic import ListView, FormView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from .forms import *
 from django.urls import reverse_lazy
@@ -85,4 +85,11 @@ class PostUpdateView(UpdateView):
     template_name = 'blog/post_create'
     model = Post
     form_class = PostCreateForm
+    success_url = '/blog/'
+
+
+
+class DeletePostView(DeleteView):
+    template_name = 'blog/delete.html'
+    model = Post
     success_url = '/blog/'
