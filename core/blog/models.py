@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from accounts.models import Profile
 
 User = get_user_model()
 # Create your models here.
@@ -20,7 +21,7 @@ class Tag(models.Model):
         return self.title 
 
 class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post')
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='post')
     title = models.CharField(max_length=10000)
     image = models.ImageField(upload_to='images/posts', null=True, blank=True)
     content = models.TextField(max_length=1000000000)
