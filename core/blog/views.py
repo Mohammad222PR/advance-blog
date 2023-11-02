@@ -9,6 +9,10 @@ from django.views.generic import ListView, FormView, CreateView, UpdateView, Del
 from django.views.generic.detail import DetailView
 from .forms import *
 from django.urls import reverse_lazy
+from rest_framework.response import Response
+from rest_framework import serializers
+from rest_framework.views import APIView
+
 # Create your views here.
 
 # class PostView(View):
@@ -39,18 +43,18 @@ from django.urls import reverse_lazy
 # #         return super().get_redirect_url(*args, **kwargs)
 
 
-class PostView(ListView):
-    template_name = 'blog/index.html'
-    queryset = Post.objects.filter(status=True)
-    paginate_by = 1
-    ordering = '-id'  
-    context_object_name = 'posts'
+# class PostView(ListView):
+#     template_name = 'blog/index.html'
+#     queryset = Post.objects.filter(status=True)
+#     paginate_by = 1
+#     ordering = '-id'  
+#     context_object_name = 'posts'
     
 
-class IndexPostDetail(DetailView):
-    template_name = 'blog/detail.html'
-    model = Post
-    context_object_name = 'post'
+# class IndexPostDetail(DetailView):
+#     template_name = 'blog/detail.html'
+#     model = Post
+#     context_object_name = 'post'
     
 
 # class PostCreateView(FormView):
@@ -67,29 +71,33 @@ class IndexPostDetail(DetailView):
     
 
 
-class PostCreateView(CreateView):
-    template_name = 'blog/post_create.html'
-    model = Post
-    fields = ['title','content','category','tag','image']
-    success_url = reverse_lazy('/blog/')
+# class PostCreateView(CreateView):
+#     template_name = 'blog/post_create.html'
+#     model = Post
+#     fields = ['title','content','category','tag','image']
+#     success_url = reverse_lazy('/blog/')
     
-    def form_valid(self, form):
-        new_post=form.save(commit=False)
-        new_post.author = self.request.user
-        new_post.status = True
-        new_post.save()
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         new_post=form.save(commit=False)
+#         new_post.author = self.request.user
+#         new_post.status = True
+#         new_post.save()
+#         return super().form_valid(form)
     
 
-class PostUpdateView(UpdateView):
-    template_name = 'blog/post_create'
-    model = Post
-    form_class = PostCreateForm
-    success_url = '/blog/'
+# class PostUpdateView(UpdateView):
+#     template_name = 'blog/post_create'
+#     model = Post
+#     form_class = PostCreateForm
+#     success_url = '/blog/'
 
 
 
-class DeletePostView(DeleteView):
-    template_name = 'blog/delete.html'
-    model = Post
-    success_url = '/blog/'
+# class DeletePostView(DeleteView):
+#     template_name = 'blog/delete.html'
+#     model = Post
+#     success_url = '/blog/'
+
+class ApiPostView(APIView):
+    def get(self, request):
+        return Response("ok")

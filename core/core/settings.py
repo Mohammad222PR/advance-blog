@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'blog.apps.BlogConfig',
     # Install Package.
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
