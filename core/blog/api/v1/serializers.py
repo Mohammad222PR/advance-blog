@@ -4,7 +4,7 @@ from blog.models import Post
 
 class PostSerializers(serializers.ModelSerializer):
     category = serializers.StringRelatedField()
-    tag = serializers.SlugRelatedField(slug_field='title', many=True, read_only=True)
+    tag = serializers.StringRelatedField()
     author = serializers.StringRelatedField()
     class Meta:
         model = Post

@@ -2,23 +2,43 @@ from rest_framework.views import Response
 from rest_framework.views import APIView
 from blog.models import Post
 from .serializers import PostSerializers
+from rest_framework.parsers import MultiPartParser
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-data = {
-    "id":1,
-    "title":"hi"
-}
+
 
 class PostList(APIView):
+    serializer_class = PostSerializers
+    parser_classes = (MultiPartParser,)
+        
     def get(self, request):
         posts = Post.objects.all()
         ser = PostSerializers(instance=posts, many=True)
         return Response(data=ser.data)
     
+
+    def post(self, request):
+        ser = PostSerializers(data=request.data)
+        if ser.is_valid():
+            ser.validated_data['author'] = request.user
+            ser.save()
+            return Response(data=ser.data, status=status.HTTP_200_OK)
+        return Response(data=ser.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def put(self, request, pk):
+        post = get_object_or_404(Post, id=pk)
+        ser = PostSerializers(instance=post, data=request.data, partial=True)
+        if ser.is_valid():
+            ser.save()
+            return Response(data=ser.data, status=status.HTTP_200_OK)
+        return Response(data=ser.errors, status=status.HTTP_404_NOT_FOUND)
+
     
 class PostDetail(APIView):
     def get(self, request, pk):
         post = get_object_or_404(Post, id=pk)
         ser = PostSerializers(instance=post)
         return Response(data=ser.data, status=status.HTTP_200_OK)
-        
+
+
