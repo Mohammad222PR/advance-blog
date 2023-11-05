@@ -22,9 +22,12 @@ class PostList(APIView):
         if ser.is_valid():
             ser.validated_data['author'] = request.user
             ser.save()
-            return Response(data=ser.data, status=status.HTTP_200_OK)
+            return Response(data=ser.data, status=status.HTTP_201_CREATED)
         return Response(data=ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class PostUpdateView(APIView):
+    serializer_class = PostSerializers
+    parser_classes = (MultiPartParser,)
 
     def put(self, request, pk):
         post = get_object_or_404(Post, id=pk)
@@ -34,7 +37,13 @@ class PostList(APIView):
             return Response(data=ser.data, status=status.HTTP_200_OK)
         return Response(data=ser.errors, status=status.HTTP_404_NOT_FOUND)
 
-    
+
+    def delete(self, request, pk):
+        post = get_object_or_404(Post, id=pk)
+        post.delete()
+        return Response("item Remove Success Fully", status=status.HTTP_202_ACCEPTED)
+
+
 class PostDetail(APIView):
     def get(self, request, pk):
         post = get_object_or_404(Post, id=pk)
