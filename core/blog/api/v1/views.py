@@ -5,7 +5,7 @@ from .serializers import PostSerializers
 from rest_framework.parsers import MultiPartParser
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class PostList(APIView):
     serializer_class = PostSerializers
@@ -45,6 +45,7 @@ class PostUpdateView(APIView):
 
 
 class PostDetail(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly,]
     def get(self, request, pk):
         post = get_object_or_404(Post, id=pk)
         ser = PostSerializers(instance=post)
