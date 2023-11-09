@@ -7,15 +7,12 @@ from rest_framework.generics import ListCreateAPIView
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from django.shortcuts import get_object_or_404
+\
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 
-class PostListGeneric(ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
-    parser_classes = (MultiPartParser,)
-    queryset = Post.objects.filter(status=True)
-    serializer_class = PostSerializers
 
+    
 # class PostList(APIView):
 #     serializer_class = PostSerializers
 #     parser_classes = (MultiPartParser,)
@@ -59,3 +56,10 @@ class PostDetail(APIView):
         post = get_object_or_404(Post, id=pk)
         post.delete()
         return Response("item Remove Success Fully", status=status.HTTP_202_ACCEPTED)
+    
+class PostListGeneric(ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser,)
+    queryset = Post.objects.filter(status=True)
+    serializer_class = PostSerializers
+
