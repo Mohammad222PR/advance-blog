@@ -20,13 +20,14 @@ from django.conf import settings
 from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
 urlpatterns = [
-    path('schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('admin/', admin.site.urls),
-    path('blog/', include('blog.urls', namespace='blog')),
-    path('blog/api/v1/', include('blog.api.v1.urls', namespace='api-v1')),
-    
-
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "swagger/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"
+    ),
+    path("admin/", admin.site.urls),
+    path("blog/", include("blog.urls", namespace="blog")),
+    path("blog/api/v1/", include("blog.api.v1.urls", namespace="api-v1")),
+    path("api-auth/", include("rest_framework.urls")),
 ]
 
 
