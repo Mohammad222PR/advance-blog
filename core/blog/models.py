@@ -42,3 +42,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_snipes(self):
+        return self.content[0:3] + str("...")
