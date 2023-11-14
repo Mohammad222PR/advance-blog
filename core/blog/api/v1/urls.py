@@ -6,7 +6,6 @@ from rest_framework.routers import DefaultRouter
 app_name = "api-v1"
 
 
-
 router = DefaultRouter()
 router.register(r'post/post', views.PostListGeneric, basename='post')
 router.register(r'post/cat', views.PostCategoryListGeneric, basename='cat')

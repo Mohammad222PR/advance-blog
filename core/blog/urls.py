@@ -10,6 +10,5 @@ urlpatterns = [
     path('post/create', views.PostCreateView.as_view(), name='post_create_view'),
     path('post/update/<int:pk>', views.PostUpdateView.as_view(), name='post_update_view'),
     path('post/<int:id>/delete', views.DeleteView.as_view(), name='post_delete_view'),
-    path('', views.ApiPostView.as_view(), name='api_post')
 
 ]

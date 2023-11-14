@@ -15,6 +15,7 @@ class PostTagSerializers(serializers.ModelSerializer):
 class PostSerializers(serializers.ModelSerializer):
     snipes = serializers.ReadOnlyField(source='get_snipes')
     url_post = serializers.SerializerMethodField(method_name='url_post')
+    category = serializers.SlugRelatedField(many=False,slug_field='title')
     class Meta:
         model = Post
         fields = "__all__"
