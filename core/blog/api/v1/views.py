@@ -68,7 +68,7 @@ class PostCategoryListGeneric(ModelViewSet):
     parser_classes = (MultiPartParser,)
     queryset = Category.objects.all()
     serializer_class = PostCategorySerializers
-
+#adwd
 
 class PostTagListGeneric(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
