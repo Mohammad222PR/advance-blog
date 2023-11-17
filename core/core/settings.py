@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "blog.apps.BlogConfig",
     # Install Package.
+    'django_filters',
     "rest_framework",
     "drf_spectacular",
 ]
