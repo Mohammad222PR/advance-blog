@@ -7,7 +7,7 @@ from rest_framework.generics import ListCreateAPIView
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from django.shortcuts import get_object_or_404
-
+from .permissions import IsOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 
@@ -58,10 +58,13 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 #         return Response("item Remove Success Fully", status=status.HTTP_202_ACCEPTED)
     
 class PostListGeneric(ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    parser_classes = (MultiPartParser,)
+
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     queryset = Post.objects.filter(status=True).order_by('-created_date')
     serializer_class = PostSerializers
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['category', 'status']
+
 
 class PostCategoryListGeneric(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
