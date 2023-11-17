@@ -15,13 +15,13 @@ class PostTagSerializers(serializers.ModelSerializer):
 
 
 class PostSerializers(serializers.ModelSerializer):
-    author = serializers.StringRelatedField()
+    author = serializers.StringRelatedField(read_only=True)
     snipes = serializers.ReadOnlyField(source="get_snipes")
     url_post = serializers.SerializerMethodField(source="get_absolute_url")
     category = serializers.SlugRelatedField(
         many=False, slug_field="title", queryset=Category.objects.all()
     )
-    image = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField(source="get_image")
 
     tag = serializers.SlugRelatedField(
         many=True, slug_field="title", queryset=Tag.objects.all()
@@ -30,6 +30,7 @@ class PostSerializers(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = "__all__"
+        read_only_fields = ["author"]
 
     def get_url_post(self, obj):
         request = self.context.get("request")
@@ -37,8 +38,10 @@ class PostSerializers(serializers.ModelSerializer):
 
     def get_image(self, obj):
         request = self.context.get("request")
-        img = obj.image.url
-        return request.build_absolute_uri(img)
+        if obj.image:
+            image = obj.image.url
+            return request.build_absolute_uri(image)
+        return None
 
     def to_representation(self, instance):
         request = self.context.get("request")
@@ -54,3 +57,8 @@ class PostSerializers(serializers.ModelSerializer):
         rep["category"] = PostCategorySerializers(instance.category).data
 
         return rep
+
+    def create(self, validated_data):
+        request = self.context.get("request")
+        validated_data["author"] = Profile.objects.get(user__id=request.user.id)
+        return super().create(validated_data)
