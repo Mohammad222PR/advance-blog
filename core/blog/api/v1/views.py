@@ -9,10 +9,9 @@ from rest_framework.viewsets import ModelViewSet
 from django.shortcuts import get_object_or_404
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-
-
-
-    
+from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from .paginations import PaginationClass
 # class PostList(APIView):
 #     serializer_class = PostSerializers
 #     parser_classes = (MultiPartParser,)
@@ -56,14 +55,20 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 #         post = get_object_or_404(Post, id=pk)
 #         post.delete()
 #         return Response("item Remove Success Fully", status=status.HTTP_202_ACCEPTED)
-    
-class PostListGeneric(ModelViewSet):
 
+
+class PostListGeneric(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-    queryset = Post.objects.filter(status=True).order_by('-created_date')
+    pagination_class = PaginationClass
+    queryset = Post.objects.filter(status=True).order_by("-created_date")
     serializer_class = PostSerializers
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['category', 'status']
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_fields = ["category", "status", "author", "tag"]
+    search_fields = [
+        "content",
+        "title"
+    ]
+    ordering_fields = ["created_date", "status"]
 
 
 class PostCategoryListGeneric(ModelViewSet):
@@ -71,6 +76,9 @@ class PostCategoryListGeneric(ModelViewSet):
     parser_classes = (MultiPartParser,)
     queryset = Category.objects.all()
     serializer_class = PostCategorySerializers
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields = ["title"]
+    ordering_fields = ["created_date"]
 
 
 class PostTagListGeneric(ModelViewSet):
@@ -78,3 +86,6 @@ class PostTagListGeneric(ModelViewSet):
     parser_classes = (MultiPartParser,)
     queryset = Tag.objects.all()
     serializer_class = PostTagSerializers
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields = ["title"]
+    ordering_fields = ["created_date"]

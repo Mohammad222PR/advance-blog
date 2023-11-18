@@ -37,13 +37,13 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
+    'django_filters',
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Install App.
     "accounts.apps.AccountsConfig",
     "blog.apps.BlogConfig",
     # Install Package.
-    'django_filters',
     "rest_framework",
     "drf_spectacular",
 ]
@@ -145,9 +145,9 @@ REST_FRAMEWORK = {
 
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 3,
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ],
+    # "DEFAULT_PERMISSION_CLASSES": [
+    #     "rest_framework.permissions.IsAuthenticated",
+    # ],
 }
 
 SPECTACULAR_SETTINGS = {
