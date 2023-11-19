@@ -12,6 +12,7 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from .paginations import PaginationClass
+
 # class PostList(APIView):
 #     serializer_class = PostSerializers
 #     parser_classes = (MultiPartParser,)
@@ -64,10 +65,7 @@ class PostListGeneric(ModelViewSet):
     serializer_class = PostSerializers
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ["category", "status", "author", "tag"]
-    search_fields = [
-        "content",
-        "title"
-    ]
+    search_fields = ["content", "title"]
     ordering_fields = ["created_date", "status"]
 
 
