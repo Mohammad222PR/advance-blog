@@ -60,13 +60,18 @@ from .paginations import PaginationClass
 
 class PostListGeneric(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
-    pagination_class = PaginationClass
-    queryset = Post.objects.filter(status=True).order_by("-created_date")
+    queryset = Post.objects.filter(status=True)
     serializer_class = PostSerializers
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ["category", "status", "author", "tag"]
+    filterset_fields = {
+        "category": ["exact", "in"],
+        "status": ["exact", "in"],
+        "author": ["exact", "in"],
+        "tag": ["exact", "in"],
+    }
     search_fields = ["content", "title"]
     ordering_fields = ["created_date", "status"]
+    pagination_class = PaginationClass
 
 
 class PostCategoryListGeneric(ModelViewSet):
@@ -77,6 +82,7 @@ class PostCategoryListGeneric(ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ["title"]
     ordering_fields = ["created_date"]
+    pagination_class = PaginationClass
 
 
 class PostTagListGeneric(ModelViewSet):
@@ -87,3 +93,4 @@ class PostTagListGeneric(ModelViewSet):
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ["title"]
     ordering_fields = ["created_date"]
+    pagination_class = PaginationClass
