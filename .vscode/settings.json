@@ -2,6 +2,9 @@
     "python.analysis.typeCheckingMode": "off",
     "python.analysis.autoImportCompletions": false,
     "cSpell.words": [
-        "filterset"
+        "filterset",
+        "Registerationserializer",
+        "Registerserializers",
+        "yasg"
     ]
 }

@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "blog.apps.BlogConfig",
     # Install Package.
     "rest_framework",
-    "drf_spectacular",
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -140,7 +140,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 
 REST_FRAMEWORK = {
-    "DEFAULT_SCHEMA_CLASS": 'rest_framework.schemas.coreapi.AutoSchema',
     
 
     # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
@@ -148,13 +147,4 @@ REST_FRAMEWORK = {
     # "DEFAULT_PERMISSION_CLASSES": [
     #     "rest_framework.permissions.IsAuthenticated",
     # # ],
-}
-
-SPECTACULAR_SETTINGS = {
-    "TITLE": "wall API",
-    "DESCRIPTION": "an API doc for wall project",
-    "VERSION": "1.0.0",
-    "SERVE_INCLUDE_SCHEMA": False,
-    "COMPONENT_SPLIT_REQUEST": True
-    # OTHER SETTINGS
 }
