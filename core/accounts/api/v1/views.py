@@ -1,6 +1,7 @@
 from rest_framework import generics
 from .serialiezers import Registerationserializer
 from rest_framework.response import Response
+from rest_framework import status
 
 
 class RegistrationAPIView(generics.GenericAPIView):
@@ -10,7 +11,8 @@ class RegistrationAPIView(generics.GenericAPIView):
         serializer = Registerationserializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            date = {
-                'email':''
+            data = {
+                "email": serializer.validated_data["email"],
             }
-            return Response()
+            return Response(data, status=status.HTTP_200_OK)
+        return Response(data=serializer.errors, status=status.HTTP_404_NOT_FOUND)
