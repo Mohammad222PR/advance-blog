@@ -5,6 +5,7 @@
         "filterset",
         "Registerationserializer",
         "Registerserializers",
+        "serialiezers",
         "yasg"
     ]
 }
