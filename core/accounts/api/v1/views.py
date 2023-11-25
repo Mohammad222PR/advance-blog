@@ -14,5 +14,5 @@ class RegistrationAPIView(generics.GenericAPIView):
             data = {
                 "email": serializer.validated_data["email"],
             }
-            return Response(data, status=status.HTTP_200_OK)
+            return Response(data=data, status=status.HTTP_200_OK)
         return Response(data=serializer.errors, status=status.HTTP_404_NOT_FOUND)
