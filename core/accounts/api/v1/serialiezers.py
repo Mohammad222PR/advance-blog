@@ -30,6 +30,5 @@ class Registerationserializer(serializers.ModelSerializer):
         return super().validate(attrs)
 
     def create(self, validated_data):
-        validated_data.pop('password1', None)
+        validated_data.pop("password1", None)
         return User.objects.create_user(**validated_data)
-
