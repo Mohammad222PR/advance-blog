@@ -63,12 +63,7 @@ class PostListGeneric(ModelViewSet):
     queryset = Post.objects.filter(status=True)
     serializer_class = PostSerializers
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = {
-        "category": ["exact", "in"],
-        "status": ["exact", "in"],
-        "author": ["exact", "in"],
-        "tag": ["exact", "in"],
-    }
+    filterset_fields = ["category" ,"status" ,"author" ,"tag"]
     search_fields = ["content", "title"]
     ordering_fields = ["created_date", "status"]
     pagination_class = PaginationClass

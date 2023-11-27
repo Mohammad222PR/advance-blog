@@ -37,15 +37,17 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
-    'django_filters',
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Install App.
     "accounts.apps.AccountsConfig",
     "blog.apps.BlogConfig",
     # Install Package.
+    'rest_framework.authtoken',
     "rest_framework",
     'drf_yasg',
+    'django_filters',
+
 ]
 
 MIDDLEWARE = [
@@ -140,11 +142,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 
 REST_FRAMEWORK = {
-    
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
 
-    # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    # "PAGE_SIZE": 3,
-    # "DEFAULT_PERMISSION_CLASSES": [
-    #     "rest_framework.permissions.IsAuthenticated",
-    # # ],
+    ]
 }
