@@ -32,6 +32,19 @@ ALLOWED_HOSTS = config(
 
 # Application definition
 
+APPS = [
+    "accounts.apps.AccountsConfig",
+    "blog.apps.BlogConfig",
+]
+
+PACKAGE = [
+    "rest_framework.authtoken",
+    "rest_framework",
+    "drf_yasg",
+    "django_filters",
+    "rest_framework_simplejwt",
+]
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -39,15 +52,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Install App.
-    "accounts.apps.AccountsConfig",
-    "blog.apps.BlogConfig",
-    # Install Package.
-    'rest_framework.authtoken',
-    "rest_framework",
-    'drf_yasg',
-    'django_filters',
-
+    *PACKAGE,
+    *APPS,
 ]
 
 MIDDLEWARE = [
@@ -142,10 +148,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
-
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ]
 }

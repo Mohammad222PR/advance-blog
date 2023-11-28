@@ -8,6 +8,6 @@ Pillow
 markdown       
 django-filter
 drf-yasg[validation]
-
+djangorestframework-simplejwt
 
 # delployment modules
