@@ -4,8 +4,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
-from rest_framework_simplejwt.views import TokenObtainPairView
-
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class Registerationserializer(serializers.ModelSerializer):
@@ -38,45 +37,48 @@ class Registerationserializer(serializers.ModelSerializer):
         return User.objects.create_user(**validated_data)
 
 
-
-
-
 class CustomAuthTokenSerializer(serializers.Serializer):
-    email = serializers.CharField(
-        label=_("Email"),
-        write_only=True
-    )
+    email = serializers.CharField(label=_("Email"), write_only=True)
     password = serializers.CharField(
         label=_("Password"),
-        style={'input_type': 'password'},
+        style={"input_type": "password"},
         trim_whitespace=False,
-        write_only=True
+        write_only=True,
     )
-    token = serializers.CharField(
-        label=_("Token"),
-        read_only=True
-    )
+    token = serializers.CharField(label=_("Token"), read_only=True)
 
     def validate(self, attrs):
-        username = attrs.get('email')
-        password = attrs.get('password')
+        username = attrs.get("email")
+        password = attrs.get("password")
 
         if username and password:
-            user = authenticate(request=self.context.get('request'),
-                                username=username, password=password)
+            user = authenticate(
+                request=self.context.get("request"),
+                username=username,
+                password=password,
+            )
 
             # The authenticate call simply returns None for is_active=False
             # users. (Assuming the default ModelBackend authentication
             # backend.)
             if not user:
-                msg = _('Unable to log in with provided credentials.')
-                raise serializers.ValidationError(msg, code='authorization')
+                msg = _("Unable to log in with provided credentials.")
+                raise serializers.ValidationError(msg, code="authorization")
         else:
             msg = _('Must include "username" and "password".')
-            raise serializers.ValidationError(msg, code='authorization')
+            raise serializers.ValidationError(msg, code="authorization")
 
-        attrs['user'] = user
+        attrs["user"] = user
         return attrs
 
-class CustomTokenObtainPairView(TokenObtainPairView):
-    pass
+
+class CustomTokenObtainPairSerializers(TokenObtainPairSerializer):
+    
+    def validate(self, attrs):
+        validated_data = super().validate(attrs)
+        validated_data['message'] = str("This is your JWT token dont share this key to any users")
+        validated_data['email'] = self.user.email
+        validated_data['id'] = self.user.id
+        return validated_data
+    
+
