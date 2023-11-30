@@ -3,7 +3,9 @@ from .serialiezers import (
     Registerationserializer,
     CustomAuthTokenSerializer,
     CustomTokenObtainPairSerializers,
+    ChangePasswordSerializer,
 )
+from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -11,12 +13,15 @@ from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
-
+from django.contrib.auth import get_user_model
 # imported library
+
+User = get_user_model()
 
 
 class RegistrationAPIView(generics.GenericAPIView):
     serializer_class = Registerationserializer
+    parser_classes = (MultiPartParser,)
 
     def post(self, request, *args, **kwargs):
         serializer = Registerationserializer(data=request.data)
@@ -31,6 +36,7 @@ class RegistrationAPIView(generics.GenericAPIView):
 
 class CustomObtainAuthToken(ObtainAuthToken):
     serializer_class = CustomAuthTokenSerializer
+    parser_classes = (MultiPartParser,)
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data, context={"request": request})
@@ -48,11 +54,39 @@ class CustomObtainAuthToken(ObtainAuthToken):
 
 class CustomDiscardAuthToken(APIView):
     permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser,)
+
 
     def post(self, request):
         request.user.auth_token.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({'detail':'your token delete successfully'},status=status.HTTP_204_NO_CONTENT)
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializers
+    parser_classes = (MultiPartParser,)
+
+
+class ChangePasswordApiView(generics.GenericAPIView):
+    model = User
+    permission_classes = [IsAuthenticated]
+    serializer_class = ChangePasswordSerializer
+    parser_classes = (MultiPartParser,)
+
+    def get_object(self):
+        obj = self.request.user
+        return obj
+    
+    def put(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = self.get_serializer(data = request.data)
+        if serializer.is_valid():
+            # Check old password
+            if not self.object.check_password(serializer.data.get('old_password')):
+                return Response({'old_password': ['Wrong Password']}, status=status.HTTP_400_BAD_REQUEST)
+
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            return Response({'details':'password change successfully'}, status=status.HTTP_202_ACCEPTED)        
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+ 

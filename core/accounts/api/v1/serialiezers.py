@@ -73,12 +73,29 @@ class CustomAuthTokenSerializer(serializers.Serializer):
 
 
 class CustomTokenObtainPairSerializers(TokenObtainPairSerializer):
-    
     def validate(self, attrs):
         validated_data = super().validate(attrs)
-        validated_data['message'] = str("This is your JWT token dont share this key to any users")
-        validated_data['email'] = self.user.email
-        validated_data['id'] = self.user.id
+        validated_data["message"] = str(
+            "This is your JWT token dont share this key to any users"
+        )
+        validated_data["email"] = self.user.email
+        validated_data["id"] = self.user.id
         return validated_data
-    
 
+
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+    new_password2 = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        if attrs.get("new_password") != attrs.get("new_password2"):
+            raise serializers.ValidationError("Password not mach")
+
+        try:
+            validate_password(attrs.get("new_password"))
+
+        except exceptions.ValidationError as e:
+            raise serializers.ValidationError({"new_password": list(e.messages)})
+
+        return super().validate(attrs)
