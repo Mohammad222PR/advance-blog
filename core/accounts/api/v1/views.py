@@ -17,7 +17,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
-from accounts.models import Profile
+from accounts.models.profiles import Profile
 # imported library
 
 User = get_user_model()
