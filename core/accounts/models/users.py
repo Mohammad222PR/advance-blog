@@ -27,6 +27,8 @@ class UserManager(BaseUserManager):
         extera_fields.setdefault('is_staff',True)
         extera_fields.setdefault('is_superuser',True)
         extera_fields.setdefault('is_active',True)
+        extera_fields.setdefault('is_verified',True)
+
 
         if extera_fields.get('is_staff') is not True:
             raise ValueError("staff user most be not True")
@@ -45,7 +47,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-    objects = UserManager()
+    is_verified = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
-   
+
+    objects = UserManager()
