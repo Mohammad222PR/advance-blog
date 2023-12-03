@@ -64,6 +64,11 @@ class CustomAuthTokenSerializer(serializers.Serializer):
             if not user:
                 msg = _("Unable to log in with provided credentials.")
                 raise serializers.ValidationError(msg, code="authorization")
+            
+            if not user.is_verified:
+                raise serializers.ValidationError({'detail':'User is not verified'}, code='authorization')
+
+
         else:
             msg = _('Must include "username" and "password".')
             raise serializers.ValidationError(msg, code="authorization")
@@ -84,7 +89,7 @@ class CustomTokenObtainPairSerializers(TokenObtainPairSerializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-    
+
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
     new_password2 = serializers.CharField(required=True)
