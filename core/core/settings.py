@@ -43,6 +43,7 @@ PACKAGE = [
     "drf_yasg",
     "django_filters",
     "rest_framework_simplejwt",
+    "mail_templated",
 ]
 
 INSTALLED_APPS = [
@@ -149,13 +150,21 @@ AUTH_USER_MODEL = "accounts.User"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        
         "rest_framework.authentication.BasicAuthentication",
-
         "rest_framework.authentication.SessionAuthentication",
-        
         "rest_framework.authentication.TokenAuthentication",
-
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ]
 }
+
+
+# email confutation
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# email settings
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = False
+EMAIL_HOST = "smtp4dev"
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""
+EMAIL_PORT = 25

@@ -17,9 +17,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
 from accounts.models.profiles import Profile
+from .permissions import IsVerified
+from mail_templated import send_mail
 
 # imported library
 
+# user
 User = get_user_model()
 
 
@@ -41,6 +44,7 @@ class RegistrationAPIView(generics.GenericAPIView):
 class CustomObtainAuthToken(ObtainAuthToken):
     serializer_class = CustomAuthTokenSerializer
     parser_classes = (MultiPartParser,)
+    # permission_classes = [IsVerified]
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(
@@ -49,7 +53,13 @@ class CustomObtainAuthToken(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key, "user_id": user.pk, "email": user.email})
+        return Response(
+            {
+                "token": token.key,
+                "user_id": user.pk,
+                "email": user.email,
+            }
+        )
 
 
 class CustomDiscardAuthToken(APIView):
@@ -108,3 +118,11 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
         queryset = self.get_queryset()
         obj = get_object_or_404(queryset, user=self.request.user)
         return obj
+
+
+class TestEmailSendView(generics.GenericAPIView):
+
+    def get(self, request, *args, **kwargs):
+
+        send_mail('email/hello.tpl', {'name':'ali'}, 'admin@admin.com', ['mohamad@gamil.com'])
+        return Response({"detail":"email send"}, status=status.HTTP_200_OK)

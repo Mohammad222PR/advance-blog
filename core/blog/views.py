@@ -40,7 +40,6 @@ class IndexView(TemplateView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context["post"] = Post.objects.all()
-        context["post"] = Post.objects.all()
         return context
 
 
