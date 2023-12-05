@@ -18,7 +18,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
 from accounts.models.profiles import Profile
 from .permissions import IsVerified
-from mail_templated import send_mail
+# from mail_templated import send_mail
+from mail_templated import EmailMessage
+from ..utils import EmailThread
+from rest_framework_simplejwt.tokens import RefreshToken
 
 # imported library
 
@@ -121,8 +124,19 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
 
 
 class TestEmailSendView(generics.GenericAPIView):
-
+    
     def get(self, request, *args, **kwargs):
-
-        send_mail('email/hello.tpl', {'name':'ali'}, 'admin@admin.com', ['mohamad@gamil.com'])
+        self.email = 'mo123hammades13851@gmail.com'
+        user_obj = get_object_or_404(User, email=self.email)
+        email_obj = EmailMessage('email/hello.tpl', {'name':'ali'}, 'admin@admin.com', to=[self.email])
+        EmailThread(email_obj).start()
         return Response({"detail":"email send"}, status=status.HTTP_200_OK)
+        
+    def get_tokens_for_user(self, user):
+        refresh = RefreshToken.for_user(user)
+
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
+
