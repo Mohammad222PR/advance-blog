@@ -14,6 +14,7 @@ services:
     environment:
       - SECRET_KEY=test
       - DEBUG=True
+      
    # smtp4dev service for hande confrim which email   
   smtp4dev:
     image: rnwood/smtp4dev:v3

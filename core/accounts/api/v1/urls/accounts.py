@@ -23,12 +23,12 @@ urlpatterns = [
     path('password-change/', views.ChangePasswordApiView.as_view(), name="password-change"),
 
     # # activation user:
-    # path('user/activation/confirm/', views.UserConfirmView.as_view(), name="user-activation-confirm"),
+    path('activation/confirm/<str:token>', views.ActivationApiView.as_view(), name="activation"),
 
     # # Resend activation:
     # path('user/activation/resend/', views.ResendConfirmView.as_view(), name="user-activation-resend"),
 
-    # test:
-    path('test-email/', views.TestEmailSendView.as_view(), name="test-email"),
+    # test email:
+    # path('test-email/', views.TestEmailSendView.as_view(), name="test-email"),
 
 ]

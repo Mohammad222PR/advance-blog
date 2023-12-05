@@ -18,6 +18,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
 from accounts.models.profiles import Profile
 from .permissions import IsVerified
+
 # from mail_templated import send_mail
 from mail_templated import EmailMessage
 from ..utils import EmailThread
@@ -34,17 +35,59 @@ class RegistrationAPIView(generics.GenericAPIView):
     parser_classes = (MultiPartParser,)
 
     def post(self, request, *args, **kwargs):
+        """
+        validate serializer for create new user`
+        """
         serializer = Registerationserializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            email = serializer.validated_data["email"]
             data = {
-                "email": serializer.validated_data["email"],
+                "email": email,
             }
+            """get user email and id for send activation email to user for verified account"""
+            user_obj = get_object_or_404(User, email=email)
+            token = self.get_tokens_for_user(user_obj)
+            email_obj = EmailMessage(
+                # file url
+                "email/activation_email.tpl",
+                # JWT token user
+                {"token": token},
+                # from email
+                "admin@admin.com",
+                # to email
+                to=[email],
+            )
+            EmailThread(email_obj).start()
             return Response(data=data, status=status.HTTP_200_OK)
         return Response(data=serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
+    def get_tokens_for_user(self, user):
+        """generate access tokens(JWT) for a given user"""
+        refresh = RefreshToken.for_user(user)
+        return str(refresh.access_token)
+
+
+class ActivationApiView(APIView):
+    """verified account"""
+
+    def get(self, request, token, *args, **kwargs):
+        print(kwargs)
+        print(token)
+        print(args)
+        return Response("ok")
+
 
 class CustomObtainAuthToken(ObtainAuthToken):
+    """
+    customObtainAuthToken for token now we have three out put field
+    {
+    token,
+    user_id,
+    email,
+    }
+    """
+
     serializer_class = CustomAuthTokenSerializer
     parser_classes = (MultiPartParser,)
     # permission_classes = [IsVerified]
@@ -66,6 +109,10 @@ class CustomObtainAuthToken(ObtainAuthToken):
 
 
 class CustomDiscardAuthToken(APIView):
+    """
+    discard user token if input your token you can delete your token id
+    """
+
     permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser,)
 
@@ -123,20 +170,16 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
         return obj
 
 
-class TestEmailSendView(generics.GenericAPIView):
-    
-    def get(self, request, *args, **kwargs):
-        self.email = 'mo123hammades13851@gmail.com'
-        user_obj = get_object_or_404(User, email=self.email)
-        email_obj = EmailMessage('email/hello.tpl', {'name':'ali'}, 'admin@admin.com', to=[self.email])
-        EmailThread(email_obj).start()
-        return Response({"detail":"email send"}, status=status.HTTP_200_OK)
-        
-    def get_tokens_for_user(self, user):
-        refresh = RefreshToken.for_user(user)
+# class TestEmailSendView(generics.GenericAPIView):
 
-        return {
-            'refresh': str(refresh),
-            'access': str(refresh.access_token),
-        }
+#     def get(self, request, *args, **kwargs):
+#         self.email = 'mo123hammades13851@gmail.com'
+#         user_obj = get_object_or_404(User, email = email_obj)
+#         token = self.get_tokens_for_user(user_obj)
+#         email_obj = EmailMessage('email/hello.tpl', {'token':token}, 'admin@admin.com', to=[self.email])
+#         EmailThread(email_obj).start()
+#         return Response({"detail":"email send"}, status=status.HTTP_200_OK)
 
+#     def get_tokens_for_user(self, user):
+#         refresh = RefreshToken.for_user(user)
+#         return str(refresh.access_token)
