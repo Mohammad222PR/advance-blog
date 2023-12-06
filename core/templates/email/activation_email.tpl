@@ -11,6 +11,8 @@ This is a plain text part.
 {% block html %}
 Youre token: <br>
 
- https://127.0.0.1:8000/accounts/api/v1/activation/confirm/{{token}}
-
+ <a href='http://127.0.0.1:8000/accounts/api/v1/activation/confirm/{{token}}'>click to verified</a>
+<br>
+ <b>Alert:</b>
+ <p>dont get youre token code to anyone</P>
 {% endblock %}

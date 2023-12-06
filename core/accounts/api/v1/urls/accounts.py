@@ -26,7 +26,7 @@ urlpatterns = [
     path('activation/confirm/<str:token>', views.ActivationApiView.as_view(), name="activation"),
 
     # # Resend activation:
-    # path('user/activation/resend/', views.ResendConfirmView.as_view(), name="user-activation-resend"),
+    path('activation/resend/', views.ActivationResendApiView.as_view(), name="-activation-resend"),
 
     # test email:
     # path('test-email/', views.TestEmailSendView.as_view(), name="test-email"),
