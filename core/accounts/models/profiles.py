@@ -18,7 +18,6 @@ class Profile(models.Model):
     bio = models.TextField(max_length=10000000)
     created_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-
     def __str__(self):
         return self.user.email
     

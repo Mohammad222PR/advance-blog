@@ -14,3 +14,4 @@ djangorestframework-simplejwt
 
 # email third_party modules
 django-mail-templated
+-U djoser

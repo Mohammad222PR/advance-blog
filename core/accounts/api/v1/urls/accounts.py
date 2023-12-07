@@ -28,6 +28,9 @@ urlpatterns = [
     # # Resend activation:
     path('activation/resend/', views.ActivationResendApiView.as_view(), name="-activation-resend"),
 
+    # Reset password
+    path('reset/password/', views.ResetPasswordApiView.as_view(), name="reset-password"),
+
     # test email:
     # path('test-email/', views.TestEmailSendView.as_view(), name="test-email"),
 

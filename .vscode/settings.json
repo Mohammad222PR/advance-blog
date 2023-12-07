@@ -3,6 +3,7 @@
     "python.analysis.autoImportCompletions": false,
     "cSpell.words": [
         "authtoken",
+        "djoser",
         "filterset",
         "Registerationserializer",
         "Registerserializers",
