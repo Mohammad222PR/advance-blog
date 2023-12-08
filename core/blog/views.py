@@ -21,19 +21,16 @@ class PostView(View):
     def get(self, request):
         posts = Post.objects.all()
         return render(request, "blog/index.html", {"posts": posts})
-        return render(request, "blog/index.html", {"posts": posts})
 
 
-class IndexPostDetail(View):
+class PostDetailView(View):
     def get(self, request, pk):
         post = Post.objects.get(id=pk)
         return render(request, "blog/detail.html", {"post": post})
 
-        return render(request, "blog/detail.html", {"post": post})
 
 
 class IndexView(TemplateView):
-    template_name = "blog/index.html"
     template_name = "blog/index.html"
 
     def get_context_data(self, **kwargs):

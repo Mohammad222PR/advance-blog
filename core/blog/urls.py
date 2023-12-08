@@ -6,11 +6,12 @@ from django.urls import include
 app_name = "blog"
 
 urlpatterns = [
+    path('index', views.IndexView.as_view(), name='index'),
     path("", views.PostView.as_view(), name="blog"),
     path(
-        "detail/<int:pk>",
-        views.IndexPostDetail.as_view(),
-        name="blog_detail",
+        "post-detail/<int:pk>",
+        views.PostDetailView.as_view(),
+        name="post-detail",
     ),
     path("redirect", views.IndexRedirect.as_view(), name="redirect"),
     path(
