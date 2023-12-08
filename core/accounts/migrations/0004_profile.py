@@ -6,24 +6,64 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('accounts', '0003_remove_user_date_of_birth'),
+        ("accounts", "0003_remove_user_date_of_birth"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Profile',
+            name="Profile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(blank=True, default='nome firstname', max_length=100, null=True)),
-                ('last_name', models.CharField(blank=True, default='nome lastname', max_length=100, null=True)),
-                ('email', models.EmailField(max_length=100)),
-                ('avatar', models.ImageField(blank=True, null=True, upload_to='images/profile')),
-                ('bio', models.TextField(max_length=10000000)),
-                ('created_date', models.DateTimeField(auto_now_add=True)),
-                ('update_date', models.DateTimeField(auto_now=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "first_name",
+                    models.CharField(
+                        blank=True,
+                        default="nome firstname",
+                        max_length=100,
+                        null=True,
+                    ),
+                ),
+                (
+                    "last_name",
+                    models.CharField(
+                        blank=True,
+                        default="nome lastname",
+                        max_length=100,
+                        null=True,
+                    ),
+                ),
+                ("email", models.EmailField(max_length=100)),
+                (
+                    "avatar",
+                    models.ImageField(
+                        blank=True,
+                        null=True,
+                        upload_to="images/profile",
+                    ),
+                ),
+                ("bio", models.TextField(max_length=10000000)),
+                (
+                    "created_date",
+                    models.DateTimeField(auto_now_add=True),
+                ),
+                ("update_date", models.DateTimeField(auto_now=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="profile",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

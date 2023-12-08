@@ -8,7 +8,10 @@ from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from django.shortcuts import get_object_or_404
 from .permissions import IsOwnerOrReadOnly
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import (
+    IsAuthenticated,
+    IsAuthenticatedOrReadOnly,
+)
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from .paginations import PaginationClass
@@ -59,10 +62,17 @@ from .paginations import PaginationClass
 
 
 class PostListGeneric(ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [
+        IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly,
+    ]
     queryset = Post.objects.filter(status=True)
     serializer_class = PostSerializers
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filter_backends = [
+        DjangoFilterBackend,
+        SearchFilter,
+        OrderingFilter,
+    ]
     filterset_fields = ["category", "status", "author", "tag"]
     search_fields = ["content", "title"]
     ordering_fields = ["created_date", "status"]
@@ -74,7 +84,11 @@ class PostCategoryListGeneric(ModelViewSet):
     parser_classes = (MultiPartParser,)
     queryset = Category.objects.all()
     serializer_class = PostCategorySerializers
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filter_backends = [
+        DjangoFilterBackend,
+        SearchFilter,
+        OrderingFilter,
+    ]
     search_fields = ["title"]
     ordering_fields = ["created_date"]
     pagination_class = PaginationClass
@@ -85,7 +99,11 @@ class PostTagListGeneric(ModelViewSet):
     parser_classes = (MultiPartParser,)
     queryset = Tag.objects.all()
     serializer_class = PostTagSerializers
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filter_backends = [
+        DjangoFilterBackend,
+        SearchFilter,
+        OrderingFilter,
+    ]
     search_fields = ["title"]
     ordering_fields = ["created_date"]
     pagination_class = PaginationClass

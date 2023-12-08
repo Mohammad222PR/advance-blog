@@ -17,9 +17,13 @@ class PostTagSerializers(serializers.ModelSerializer):
 class PostSerializers(serializers.ModelSerializer):
     author = serializers.StringRelatedField(read_only=True)
     snipes = serializers.ReadOnlyField(source="get_snipes")
-    url_post = serializers.SerializerMethodField(source="get_absolute_url")
+    url_post = serializers.SerializerMethodField(
+        source="get_absolute_url"
+    )
     category = serializers.SlugRelatedField(
-        many=False, slug_field="title", queryset=Category.objects.all()
+        many=False,
+        slug_field="title",
+        queryset=Category.objects.all(),
     )
     image = serializers.SerializerMethodField(source="get_image")
 
@@ -54,11 +58,15 @@ class PostSerializers(serializers.ModelSerializer):
             rep.pop("content", None)
 
         rep["tag"] = PostTagSerializers(instance.tag, many=True).data
-        rep["category"] = PostCategorySerializers(instance.category).data
+        rep["category"] = PostCategorySerializers(
+            instance.category
+        ).data
 
         return rep
 
     def create(self, validated_data):
         request = self.context.get("request")
-        validated_data["author"] = Profile.objects.get(user__id=request.user.id)
+        validated_data["author"] = Profile.objects.get(
+            user__id=request.user.id
+        )
         return super().create(validated_data)

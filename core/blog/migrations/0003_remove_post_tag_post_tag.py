@@ -4,19 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('blog', '0002_alter_category_parent'),
+        ("blog", "0002_alter_category_parent"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='post',
-            name='tag',
+            model_name="post",
+            name="tag",
         ),
         migrations.AddField(
-            model_name='post',
-            name='tag',
-            field=models.ManyToManyField(to='blog.tag'),
+            model_name="post",
+            name="tag",
+            field=models.ManyToManyField(to="blog.tag"),
         ),
     ]

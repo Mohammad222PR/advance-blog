@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser, PermissionsMixin
-    )
+    BaseUserManager,
+    AbstractBaseUser,
+    PermissionsMixin,
+)
 
 
 class UserManager(BaseUserManager):
@@ -12,7 +14,7 @@ class UserManager(BaseUserManager):
         """
         if not email:
             raise ValueError("Users must have an email address")
-        email=self.normalize_email(email)
+        email = self.normalize_email(email)
         user = self.model(email=email, **extera_fields)
         user.set_password(password)
         user.save()
@@ -24,16 +26,15 @@ class UserManager(BaseUserManager):
         birth and password.
         """
 
-        extera_fields.setdefault('is_staff',True)
-        extera_fields.setdefault('is_superuser',True)
-        extera_fields.setdefault('is_active',True)
-        extera_fields.setdefault('is_verified',True)
+        extera_fields.setdefault("is_staff", True)
+        extera_fields.setdefault("is_superuser", True)
+        extera_fields.setdefault("is_active", True)
+        extera_fields.setdefault("is_verified", True)
 
-
-        if extera_fields.get('is_staff') is not True:
+        if extera_fields.get("is_staff") is not True:
             raise ValueError("staff user most be not True")
-        
-        if extera_fields.get('is_superuser') is not True:
+
+        if extera_fields.get("is_superuser") is not True:
             raise ValueError("super user most be not True")
         self.create_user(email, password, **extera_fields)
 

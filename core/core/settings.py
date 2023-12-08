@@ -26,7 +26,9 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")], default="*"
+    "ALLOWED_HOSTS",
+    cast=lambda v: [s.strip() for s in v.split(",")],
+    default="*",
 )
 
 
@@ -44,7 +46,7 @@ PACKAGE = [
     "django_filters",
     "rest_framework_simplejwt",
     "mail_templated",
-    'djoser',
+    "djoser",
 ]
 
 INSTALLED_APPS = [
@@ -171,12 +173,10 @@ EMAIL_HOST_PASSWORD = ""
 EMAIL_PORT = 25
 
 
-
 # customize JWT setting
 from datetime import timedelta
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=2),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    
 }

@@ -4,8 +4,21 @@ from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.serializers import (
+    TokenObtainPairSerializer,
+)
 
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.CharField(label=_("Email"), write_only=True)
+    password = serializers.CharField(
+        label=_("Password"),
+        style={"input_type": "password"},
+        trim_whitespace=False,
+        write_only=True,
+    )
+
+ 
 
 class Registerationserializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True)
@@ -28,7 +41,9 @@ class Registerationserializer(serializers.ModelSerializer):
             validate_password(attrs.get("password"))
 
         except exceptions.ValidationError as e:
-            raise serializers.ValidationError({"password": list(e.messages)})
+            raise serializers.ValidationError(
+                {"password": list(e.messages)}
+            )
 
         return super().validate(attrs)
 
@@ -63,20 +78,25 @@ class CustomAuthTokenSerializer(serializers.Serializer):
             # backend.)
             if not user:
                 msg = _("Unable to log in with provided credentials.")
-                raise serializers.ValidationError(msg, code="authorization")
+                raise serializers.ValidationError(
+                    msg, code="authorization"
+                )
 
             if not user.is_verified:
                 raise serializers.ValidationError(
-                    {"detail": "User is not verified"}, code="authorization"
+                    {"detail": "User is not verified"},
+                    code="authorization",
                 )
 
         else:
             msg = _('Must include "username" and "password".')
-            raise serializers.ValidationError(msg, code="authorization")
+            raise serializers.ValidationError(
+                msg, code="authorization"
+            )
 
         attrs["user"] = user
         return attrs
-    
+
 
 class CustomTokenObtainPairSerializers(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -84,7 +104,8 @@ class CustomTokenObtainPairSerializers(TokenObtainPairSerializer):
 
         if not self.user.is_verified:
             raise serializers.ValidationError(
-                {"detail": "User is not verified"}, code="authorization"
+                {"detail": "User is not verified"},
+                code="authorization",
             )
 
         validated_data["message"] = str(
@@ -108,7 +129,9 @@ class ChangePasswordSerializer(serializers.Serializer):
             validate_password(attrs.get("new_password"))
 
         except exceptions.ValidationError as e:
-            raise serializers.ValidationError({"new_password": list(e.messages)})
+            raise serializers.ValidationError(
+                {"new_password": list(e.messages)}
+            )
 
         return super().validate(attrs)
 
@@ -120,22 +143,23 @@ class ProfileSerializer(serializers.ModelSerializer):
         read_only_fields = ["email", "user"]
 
 
-
 class ActivationResendSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
 
     def validate(self, attrs):
-        email = attrs.get('email')
+        email = attrs.get("email")
 
         try:
             user_obj = User.objects.get(email=email)
 
         except User.DoesNotExist:
             raise serializers.ValidationError(
-                {'detail':'this account does not exist'})
-        
+                {"detail": "this account does not exist"}
+            )
+
         if user_obj.is_verified:
-            raise serializers.ValidationError({
-                'detail':'this account verified'})
-        attrs['user'] = user_obj
+            raise serializers.ValidationError(
+                {"detail": "this account verified"}
+            )
+        attrs["user"] = user_obj
         return super().validate(attrs)

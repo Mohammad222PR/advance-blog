@@ -5,26 +5,34 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('accounts', '0004_profile'),
-        ('blog', '0003_remove_post_tag_post_tag'),
+        ("accounts", "0004_profile"),
+        ("blog", "0003_remove_post_tag_post_tag"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='post',
-            name='author',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounts.profile'),
+            model_name="post",
+            name="author",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="accounts.profile",
+            ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='category',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='post', to='blog.category'),
+            model_name="post",
+            name="category",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="post",
+                to="blog.category",
+            ),
         ),
         migrations.AlterField(
-            model_name='post',
-            name='tag',
-            field=models.ManyToManyField(related_name='post', to='blog.tag'),
+            model_name="post",
+            name="tag",
+            field=models.ManyToManyField(
+                related_name="post", to="blog.tag"
+            ),
         ),
     ]
