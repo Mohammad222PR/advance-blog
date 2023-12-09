@@ -179,6 +179,7 @@ class CustomObtainAuthToken(ObtainAuthToken):
                 "email": user.email,
             }
         )
+    
 
 
 class LoginAPIView(generics.GenericAPIView):
