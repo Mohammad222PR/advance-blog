@@ -13,10 +13,7 @@ urlpatterns = [
         name="register-api-view",
     ),
     # login
-    path("default/login/",
-        views.LoginAPIView.as_view(),
-        name="login-api-view"
-    ),
+    path("default/login/", views.LoginAPIView.as_view(), name="login-api-view"),
     # token login & logout:
     path(
         "token/login/",

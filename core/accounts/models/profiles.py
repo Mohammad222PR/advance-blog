@@ -7,9 +7,7 @@ User = get_user_model()
 
 
 class Profile(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="profile"
-    )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="profile")
     first_name = models.CharField(
         max_length=100,
         default="nome firstname",
@@ -20,9 +18,7 @@ class Profile(models.Model):
         max_length=100, default="nome lastname", blank=True, null=True
     )
     email = models.EmailField(max_length=100)
-    avatar = models.ImageField(
-        upload_to="images/profile", blank=True, null=True
-    )
+    avatar = models.ImageField(upload_to="images/profile", blank=True, null=True)
     bio = models.TextField(max_length=10000000)
     created_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)

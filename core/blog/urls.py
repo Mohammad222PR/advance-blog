@@ -6,7 +6,7 @@ from django.urls import include
 app_name = "blog"
 
 urlpatterns = [
-    path('index', views.IndexView.as_view(), name='index'),
+    path("index", views.IndexView.as_view(), name="index"),
     path("", views.PostView.as_view(), name="blog"),
     path(
         "post-detail/<int:pk>",

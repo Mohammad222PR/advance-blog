@@ -34,6 +34,7 @@ from jwt.exceptions import (
     InvalidSignatureError,
 )
 from rest_framework.validators import ValidationError
+
 # imported library
 
 
@@ -69,9 +70,7 @@ class RegistrationAPIView(generics.GenericAPIView):
             )
             EmailThread(email_obj).start()
             return Response(data=data, status=status.HTTP_200_OK)
-        return Response(
-            data=serializer.errors, status=status.HTTP_404_NOT_FOUND
-        )
+        return Response(data=serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
     def get_tokens_for_user(self, user):
         """
@@ -120,9 +119,7 @@ class ActivationApiView(APIView):
     def get(self, request, token, *args, **kwargs):
         # decode token
         try:
-            token = jwt.decode(
-                token, settings.SECRET_KEY, algorithms=["HS256"]
-            )
+            token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
             user_id = token.get("user_id")
 
         except ExpiredSignatureError:
@@ -189,11 +186,12 @@ class LoginAPIView(generics.GenericAPIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             cd = serializer.validated_data
-            user = authenticate(email = cd['email'], password = cd['password'])
+            user = authenticate(email=cd["email"], password=cd["password"])
             if user is not None:
                 login(request, user)
-                return Response({'email':user.email, 'id':user.id}, status=status.HTTP_200_OK)
-            
+                return Response(
+                    {"email": user.email, "id": user.id}, status=status.HTTP_200_OK
+                )
 
 
 class CustomDiscardAuthToken(APIView):
@@ -229,9 +227,7 @@ class ResetPasswordApiView(APIView):
             to=[user_obj.email],
         )
         EmailThread(email_obj).start()
-        return Response(
-            data={"detail": "email sended"}, status=status.HTTP_200_OK
-        )
+        return Response(data={"detail": "email sended"}, status=status.HTTP_200_OK)
 
 
 class ChangePasswordApiView(generics.GenericAPIView):
@@ -249,25 +245,19 @@ class ChangePasswordApiView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             # Check old password
-            if not self.object.check_password(
-                serializer.data.get("old_password")
-            ):
+            if not self.object.check_password(serializer.data.get("old_password")):
                 return Response(
                     {"old_password": ["Wrong Password"]},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
 
-            self.object.set_password(
-                serializer.data.get("new_password")
-            )
+            self.object.set_password(serializer.data.get("new_password"))
             self.object.save()
             return Response(
                 {"details": "password change successfully"},
                 status=status.HTTP_202_ACCEPTED,
             )
-        return Response(
-            data=serializer.errors, status=status.HTTP_400_BAD_REQUEST
-        )
+        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProfileApiView(generics.RetrieveUpdateAPIView):

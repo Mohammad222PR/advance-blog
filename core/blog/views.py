@@ -29,7 +29,6 @@ class PostDetailView(View):
         return render(request, "blog/detail.html", {"post": post})
 
 
-
 class IndexView(TemplateView):
     template_name = "blog/index.html"
 

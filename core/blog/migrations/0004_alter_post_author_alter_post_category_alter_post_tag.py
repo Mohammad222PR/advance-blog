@@ -31,8 +31,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="post",
             name="tag",
-            field=models.ManyToManyField(
-                related_name="post", to="blog.tag"
-            ),
+            field=models.ManyToManyField(related_name="post", to="blog.tag"),
         ),
     ]
