@@ -40,7 +40,7 @@ class Post(models.Model):
     tag = models.ManyToManyField(Tag, related_name="post")
     status = models.BooleanField(default=True)
     # Time Field.
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True,)
     updated_date = models.DateTimeField(auto_now=True)
     published_day = models.DateTimeField(auto_now_add=True)
 

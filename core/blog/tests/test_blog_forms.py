@@ -18,9 +18,13 @@ class TestFormPost(TestCase):
                 "title": "Test Title",
                 "image": None,
                 "content": "Test content",
-                "category": category_obj,
-                "tag": tag_obj,
-                "created_date": datetime.now(),
+                "category": category_obj,  
+                "tag": [tag_obj], 
+                "created_date": datetime.now()
             }
         )
+
+        if not form.is_valid():
+            print(form.errors)
+
         self.assertTrue(form.is_valid())
