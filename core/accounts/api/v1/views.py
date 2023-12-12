@@ -158,6 +158,7 @@ class CustomObtainAuthToken(ObtainAuthToken):
     }
     """
 
+
     serializer_class = CustomAuthTokenSerializer
     parser_classes = (MultiPartParser,)
     # permission_classes = [IsVerified]
