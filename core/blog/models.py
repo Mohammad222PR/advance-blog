@@ -32,7 +32,9 @@ class Tag(models.Model):
 class Post(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField(max_length=10000)
-    image = models.ImageField(upload_to="images/posts", null=True, blank=True)
+    image = models.ImageField(
+        upload_to="images/posts", null=True, blank=True
+    )
     content = models.TextField(max_length=1000000000)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="post"

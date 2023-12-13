@@ -8,7 +8,9 @@ from accounts.models import User, Profile
 class TestPostModels(TestCase):
     def setUp(self):
         self.tag_obj = Tag.objects.create(title="test tag")
-        self.category_obj = Category.objects.create(title="test category")
+        self.category_obj = Category.objects.create(
+            title="test category"
+        )
 
         self.user = User.objects.create_user(
             email="email@example.com", password="DAWqwdqfgawfqs"
@@ -48,7 +50,9 @@ class TestPostModels(TestCase):
             created_date=datetime.now(),
         )
 
-        self.assertTrue(Category.objects.filter(pk=category.id).exists())
+        self.assertTrue(
+            Category.objects.filter(pk=category.id).exists()
+        )
 
     def test_tag_category_which_valid_data(self):
         tag = Tag.objects.create(
