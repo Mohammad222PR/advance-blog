@@ -13,7 +13,11 @@ urlpatterns = [
         name="register-api-view",
     ),
     # login
-    path("default/login/", views.LoginAPIView.as_view(), name="login-api-view"),
+    path(
+        "default/login/",
+        views.LoginAPIView.as_view(),
+        name="login-api-view",
+    ),
     # token login & logout:
     path(
         "token/login/",
@@ -31,7 +35,9 @@ urlpatterns = [
         views.CustomTokenObtainPairView.as_view(),
         name="jwt-create",
     ),
-    path("jwt/refresh/", TokenRefreshView.as_view(), name="jwt-refresh"),
+    path(
+        "jwt/refresh/", TokenRefreshView.as_view(), name="jwt-refresh"
+    ),
     # change password:
     path(
         "password-change/",

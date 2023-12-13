@@ -40,7 +40,9 @@ class Registerationserializer(serializers.ModelSerializer):
             validate_password(attrs.get("password"))
 
         except exceptions.ValidationError as e:
-            raise serializers.ValidationError({"password": list(e.messages)})
+            raise serializers.ValidationError(
+                {"password": list(e.messages)}
+            )
 
         return super().validate(attrs)
 
@@ -75,7 +77,9 @@ class CustomAuthTokenSerializer(serializers.Serializer):
             # backend.)
             if not user:
                 msg = _("Unable to log in with provided credentials.")
-                raise serializers.ValidationError(msg, code="authorization")
+                raise serializers.ValidationError(
+                    msg, code="authorization"
+                )
 
             if not user.is_verified:
                 raise serializers.ValidationError(
@@ -85,7 +89,9 @@ class CustomAuthTokenSerializer(serializers.Serializer):
 
         else:
             msg = _('Must include "username" and "password".')
-            raise serializers.ValidationError(msg, code="authorization")
+            raise serializers.ValidationError(
+                msg, code="authorization"
+            )
 
         attrs["user"] = user
         return attrs
@@ -122,7 +128,9 @@ class ChangePasswordSerializer(serializers.Serializer):
             validate_password(attrs.get("new_password"))
 
         except exceptions.ValidationError as e:
-            raise serializers.ValidationError({"new_password": list(e.messages)})
+            raise serializers.ValidationError(
+                {"new_password": list(e.messages)}
+            )
 
         return super().validate(attrs)
 
@@ -144,9 +152,13 @@ class ActivationResendSerializer(serializers.Serializer):
             user_obj = User.objects.get(email=email)
 
         except User.DoesNotExist:
-            raise serializers.ValidationError({"detail": "this account does not exist"})
+            raise serializers.ValidationError(
+                {"detail": "this account does not exist"}
+            )
 
         if user_obj.is_verified:
-            raise serializers.ValidationError({"detail": "this account verified"})
+            raise serializers.ValidationError(
+                {"detail": "this account verified"}
+            )
         attrs["user"] = user_obj
         return super().validate(attrs)
