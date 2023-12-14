@@ -41,7 +41,6 @@ class IndexView(TemplateView):
 
 class IndexRedirect(RedirectView):
     url = "blog:redirect"
-    url = "blog:redirect"
 
     def get_redirect_url(self, *args, **kwargs):
         return super().get_redirect_url(*args, **kwargs)

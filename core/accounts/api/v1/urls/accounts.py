@@ -35,9 +35,7 @@ urlpatterns = [
         views.CustomTokenObtainPairView.as_view(),
         name="jwt-create",
     ),
-    path(
-        "jwt/refresh/", TokenRefreshView.as_view(), name="jwt-refresh"
-    ),
+    path("jwt/refresh/", TokenRefreshView.as_view(), name="jwt-refresh"),
     # change password:
     path(
         "password-change/",
