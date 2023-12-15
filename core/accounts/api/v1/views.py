@@ -33,7 +33,6 @@ from jwt.exceptions import (
     ExpiredSignatureError,
     InvalidSignatureError,
 )
-from rest_framework.validators import ValidationError
 
 # imported library
 

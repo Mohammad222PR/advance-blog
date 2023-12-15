@@ -13,7 +13,7 @@ from django.views.generic import (
 )
 from .forms import *
 from django.urls import reverse_lazy
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
@@ -23,7 +23,7 @@ class PostView(View):
         return render(request, "blog/index.html", {"posts": posts})
 
 
-class PostDetailView(View):
+class PostDetailView(LoginRequiredMixin,View):
     def get(self, request, pk):
         post = Post.objects.get(id=pk)
         return render(request, "blog/detail.html", {"post": post})

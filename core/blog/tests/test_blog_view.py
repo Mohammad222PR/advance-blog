@@ -3,10 +3,11 @@ from django.urls import reverse
 from accounts.models import User, Profile
 from datetime import datetime
 from ..models import Post, Category, Tag
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 
 class TestPostViews(TestCase):
     def setUp(self):
-        
         self.client = Client()
 
         self.user = User.objects.create_user(
@@ -26,11 +27,14 @@ class TestPostViews(TestCase):
 
         self.category_obj = Category.objects.create(title="test category")
         self.tag_obj = Tag.objects.create(title="test tag")
+        image = SimpleUploadedFile(
+            "photo1697911298.jpeg", content=b"file_content", content_type="image/jpeg"
+        )
 
         self.post = Post.objects.create(
             author=self.profile,
             title="test",  # input title
-            image=None,  # input image
+            image=image,  # input image
             content="Test content",  # input content
             status=True,
             category=self.category_obj,  # input category
@@ -48,9 +52,13 @@ class TestPostViews(TestCase):
         self.assertTemplateUsed(response, template_name="blog/index.html")
 
     def test_post_detail_is_logged_in_response(self):
-        pass
+        self.client.force_login(self.user)
+        url = reverse("blog:post-detail", kwargs={"pk": self.post.id})
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name="blog/detail.html")
 
     def test_post_detail_is_anonymous_response(self):
         url = reverse("blog:post-detail", kwargs={"pk": self.post.id})
-        response = self.client.post(url)
-        self.assertEquals(response.status_code, 200)    
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 302)
