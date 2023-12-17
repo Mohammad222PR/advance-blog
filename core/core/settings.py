@@ -46,7 +46,7 @@ PACKAGE = [
     "django_filters",
     "rest_framework_simplejwt",
     "mail_templated",
-    'coreapi',
+    "coreapi",
 ]
 
 INSTALLED_APPS = [
