@@ -69,7 +69,6 @@ class CustomAuthTokenSerializer(serializers.Serializer):
                 username=username,
                 password=password,
             )
-
             # The authenticate call simply returns None for is_active=False
             # users. (Assuming the default ModelBackend authentication
             # backend.)
