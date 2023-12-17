@@ -1,7 +1,6 @@
 from django.test import TestCase
 from ..models import Post, Category, Tag
 from datetime import datetime
-from django.contrib.auth import get_user_model
 from accounts.models import User, Profile
 
 
