@@ -47,6 +47,7 @@ PACKAGE = [
     "rest_framework_simplejwt",
     "mail_templated",
     "djoser",
+    'coreapi',
 ]
 
 INSTALLED_APPS = [
