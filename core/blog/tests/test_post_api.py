@@ -7,6 +7,7 @@ from ..models import Category, Tag
 from django.core.files.uploadedfile import SimpleUploadedFile
 from ..models import Post
 
+
 @pytest.fixture
 def api_client():
     client = APIClient()
