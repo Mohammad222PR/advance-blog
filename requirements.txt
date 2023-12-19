@@ -20,3 +20,6 @@ flake8
 pytest
 pytest-django
 coreapi
+
+# random data creator
+Faker
