@@ -2,20 +2,17 @@ name: Django Project Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup Docker-Compose
-      run: docker-compose up -d
-    - name: Run Tests
-      run: docker exec backend sh -c "pytest ."
-      
+      - uses: actions/checkout@v3
+      - name: Setup Docker-Compose
+        run: docker-compose up -d
+      - name: Run Tests
+        run: docker exec backend sh -c "pytest ."
