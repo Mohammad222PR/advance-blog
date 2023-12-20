@@ -39,6 +39,9 @@ class IndexView(TemplateView):
         context["post"] = Post.objects.all()
         return context
 
+class PostListApiView(TemplateView):
+    template_name = 'blog/post_list_api.html'
+
 
 class IndexRedirect(RedirectView):
     url = "blog:redirect"
