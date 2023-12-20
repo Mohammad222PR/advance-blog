@@ -13,6 +13,8 @@ urlpatterns = [
         views.PostDetailView.as_view(),
         name="post-detail",
     ),
+    path("post/list/api/", views.PostListApiView.as_view(), name="post-api-view"),
+
     path("redirect", views.IndexRedirect.as_view(), name="redirect"),
     path(
         "post/create",
