@@ -80,7 +80,7 @@ class PostListGeneric(ModelViewSet):
 
 
 class PostCategoryListGeneric(ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser,)
     queryset = Category.objects.all()
     serializer_class = PostCategorySerializers

@@ -1,6 +1,5 @@
 version: "3.9"
 
-
 services:
   # service backend for handle backend development
   backend:
@@ -14,8 +13,8 @@ services:
     environment:
       - SECRET_KEY=test
       - DEBUG=True
-      
-   # smtp4dev service for hande confrim which email   
+
+  # smtp4dev service for hande confrim which email   
   smtp4dev:
     image: rnwood/smtp4dev:v3
     restart: always
@@ -28,9 +27,22 @@ services:
       - '143:143'
     volumes:
       # This is where smtp4dev stores the database..
-        - smtp4dev-data:/smtp4dev
+      - smtp4dev-data:/smtp4dev
     environment:
       - ServerOptions__HostName=smtp4dev
+  master:
+    image: locustio/locust
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./core/locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master -H http://backend:8000/
 
+  worker:
+    image: locustio/locust
+    volumes:
+      - ./core/locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --worker --master-host master
+    
 volumes:
   smtp4dev-data:
