@@ -24,3 +24,8 @@ coreapi
 
 # random data creator
 Faker
+
+
+# background proccess and cache
+celery
+Redis
