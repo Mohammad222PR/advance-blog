@@ -1,6 +1,15 @@
 version: "3.9"
 
 services:
+
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning
+
   # service backend for handle backend development
   backend:
     build: .
@@ -13,7 +22,16 @@ services:
     environment:
       - SECRET_KEY=test
       - DEBUG=True
+    depends_on:
+      - redis
 
+  worker:
+    build: .
+    command: celery -A core worker --loglevel=info
+    depends_on:
+      - redis
+      - backend
+  
   # smtp4dev service for hande confrim which email   
   smtp4dev:
     image: rnwood/smtp4dev:v3
@@ -30,5 +48,21 @@ services:
       - smtp4dev-data:/smtp4dev
     environment:
       - ServerOptions__HostName=smtp4dev
+  master:
+    image: locustio/locust
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./core/locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master -H http://backend:8000/
+
+  worker1:
+    image: locustio/locust
+    volumes:
+      - ./core/locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --worker1 --master-host master
+    
+volumes:
+  smtp4dev-data:
   # Locust service    
 
