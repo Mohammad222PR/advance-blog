@@ -31,7 +31,7 @@ services:
     depends_on:
       - redis
       - backend
-  
+
   # smtp4dev service for hande confrim which email   
   smtp4dev:
     image: rnwood/smtp4dev:v3
@@ -61,8 +61,8 @@ services:
     volumes:
       - ./core/locust:/mnt/locust
     command: -f /mnt/locust/locustfile.py --worker1 --master-host master
-    
+
 volumes:
   smtp4dev-data:
-  # Locust service    
+    # Locust service    
 
