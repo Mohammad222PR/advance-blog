@@ -49,6 +49,8 @@ PACKAGE = [
     "mail_templated",
     "coreapi",
     'corsheaders',
+    'djoser',
+
 ]
 
 INSTALLED_APPS = [
