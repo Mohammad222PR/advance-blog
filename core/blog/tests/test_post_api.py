@@ -1,11 +1,10 @@
 import pytest
 from rest_framework.test import APIClient
-from django.urls import reverse, resolve
+from django.urls import reverse
 from datetime import datetime
-from accounts.models import User, Profile
+from accounts.models import User
 from ..models import Category, Tag
 from django.core.files.uploadedfile import SimpleUploadedFile
-from ..models import Post
 
 
 @pytest.fixture

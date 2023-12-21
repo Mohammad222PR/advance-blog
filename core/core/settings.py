@@ -43,11 +43,14 @@ PACKAGE = [
     "rest_framework.authtoken",
     "rest_framework",
     "drf_yasg",
+    'django_cleanup.apps.CleanupConfig',
     "django_filters",
     "rest_framework_simplejwt",
     "mail_templated",
     "coreapi",
     'corsheaders',
+    'djoser',
+
 ]
 
 INSTALLED_APPS = [
