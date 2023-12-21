@@ -3,6 +3,7 @@ Django==4.2.6
 python-decouple==3.8
 djangorestframework
 Pillow
+django-cleanup
 
 # third party modules
 markdown       
