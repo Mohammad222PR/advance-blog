@@ -32,4 +32,6 @@ urlpatterns = [
         name="post_delete_view",
     ),
     path("api/v1/", include("blog.api.v1.urls")),
+
+
 ]

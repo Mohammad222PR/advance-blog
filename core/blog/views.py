@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
+from time import time
 from .models import *
 from django.views import View
 from django.views.generic import (
@@ -102,3 +103,6 @@ class DeletePostView(DeleteView):
     template_name = "blog/delete.html"
     model = Post
     success_url = "/blog/"
+
+
+
