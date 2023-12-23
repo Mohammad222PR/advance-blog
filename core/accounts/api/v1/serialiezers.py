@@ -20,6 +20,7 @@ class LoginSerializer(serializers.Serializer):
 
 
 class Registerationserializer(serializers.ModelSerializer):
+    email = serializers.CharField(label=_("Email"), write_only=True)
     password1 = serializers.CharField(write_only=True)
 
     """
@@ -30,7 +31,10 @@ class Registerationserializer(serializers.ModelSerializer):
         model = User
         fields = ["email", "password", "password1"]
 
+        
+
     def validate(self, attrs):
+        
         if attrs.get("password") != attrs.get("password1"):
             raise serializers.ValidationError(
                 {"detail": "password dose not math try again!"}
@@ -38,11 +42,12 @@ class Registerationserializer(serializers.ModelSerializer):
 
         try:
             validate_password(attrs.get("password"))
-
+            
         except exceptions.ValidationError as e:
             raise serializers.ValidationError({"password": list(e.messages)})
 
         return super().validate(attrs)
+
 
     def create(self, validated_data):
         validated_data.pop("password1", None)

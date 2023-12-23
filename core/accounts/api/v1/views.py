@@ -52,7 +52,7 @@ class RegistrationAPIView(generics.GenericAPIView):
         serializer = Registerationserializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            email = serializer.validated_data["email"]
+            email = serializer.validated_data["email"]  
             data = {
                 "email": email,
             }
