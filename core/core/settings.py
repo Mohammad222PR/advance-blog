@@ -50,6 +50,7 @@ PACKAGE = [
     "coreapi",
     'corsheaders',
     'djoser',
+    'django_celery_beat',
 
 ]
 
