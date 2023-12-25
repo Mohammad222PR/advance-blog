@@ -31,3 +31,6 @@ Faker
 celery
 Redis
 django-celery-beat
+redis
+# caching modules
+django-redis
