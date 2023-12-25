@@ -43,15 +43,14 @@ PACKAGE = [
     "rest_framework.authtoken",
     "rest_framework",
     "drf_yasg",
-    'django_cleanup.apps.CleanupConfig',
+    "django_cleanup.apps.CleanupConfig",
     "django_filters",
     "rest_framework_simplejwt",
     "mail_templated",
     "coreapi",
-    'corsheaders',
-    'djoser',
-    'django_celery_beat',
-
+    "corsheaders",
+    "djoser",
+    "django_celery_beat",
 ]
 
 INSTALLED_APPS = [
@@ -106,6 +105,8 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+
 
 
 # Password validation
@@ -188,11 +189,19 @@ SIMPLE_JWT = {
 }
 
 
-
-CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:8000"
-]
+CORS_ALLOWED_ALL_ORIGINS = True
 
 
 # config celery
-CELERY_BROKER_URL = 'redis://redis:6379/1'
+CELERY_BROKER_URL = "redis://redis:6379/1"
+
+# caching configs
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}

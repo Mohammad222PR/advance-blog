@@ -30,3 +30,6 @@ Faker
 # background proccess and cache
 celery
 Redis
+
+# caching modules
+django-redis
