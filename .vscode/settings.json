@@ -3,6 +3,8 @@
     "python.analysis.autoImportCompletions": false,
     "cSpell.words": [
         "authtoken",
+        "coreapi",
+        "corsheaders",
         "djoser",
         "filterset",
         "Registerationserializer",
