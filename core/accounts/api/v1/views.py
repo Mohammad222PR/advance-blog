@@ -8,6 +8,9 @@ from .serialiezers import (
     ActivationResendSerializer,
     LoginSerializer,
 )
+from django.views.decorators.vary import vary_on_cookie, vary_on_headers
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.contrib.auth import login
 from django.shortcuts import render, get_object_or_404
 from rest_framework.parsers import MultiPartParser
@@ -22,7 +25,7 @@ from django.contrib.auth import get_user_model
 from accounts.models.profiles import Profile
 from .permissions import IsVerified
 from django.contrib.auth import authenticate
-
+import requests
 # from mail_templated import send_mail
 from mail_templated import EmailMessage
 from ..utils import EmailThread
@@ -284,3 +287,10 @@ class ProfileApiView(generics.RetrieveUpdateAPIView):
 #     def get_tokens_for_user(self, user):
 #         refresh = RefreshToken.for_user(user)
 #         return str(refresh.access_token)
+
+
+class CacheView(APIView):
+    @method_decorator(cache_page(60, key_prefix="cache-view"))
+    def get(self, request):
+        response = requests.get('https://a9f6156f-b274-4522-88af-a2df25158396.mock.pstmn.io/test/delay/5')
+        return Response({'detail':response.json()})

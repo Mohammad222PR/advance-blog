@@ -61,5 +61,5 @@ urlpatterns = [
         name="reset-password",
     ),
     # test email:
-    # path('test-email/', views.TestEmailSendView.as_view(), name="test-email"),
+    path("test", views.CacheView.as_view(), name="test"),
 ]
