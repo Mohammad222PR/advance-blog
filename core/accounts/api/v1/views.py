@@ -293,4 +293,4 @@ class CacheView(APIView):
     @method_decorator(cache_page(60, key_prefix="cache-view"))
     def get(self, request):
         response = requests.get('https://a9f6156f-b274-4522-88af-a2df25158396.mock.pstmn.io/test/delay/5')
-        return Response({'detail':response.json()})
+        return Response({'detail': response.json()})
