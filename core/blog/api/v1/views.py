@@ -37,6 +37,8 @@ from .paginations import PaginationClass
 #         return Response(data=ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+
 # class PostDetail(APIView):
 #     serializer_class = PostSerializers
 #     parser_classes = (MultiPartParser,)
