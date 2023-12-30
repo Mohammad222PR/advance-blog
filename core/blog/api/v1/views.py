@@ -8,8 +8,7 @@ from rest_framework.permissions import (
     IsAuthenticated,
     IsAuthenticatedOrReadOnly,
 )
-from django.views.decorators.cache import cache_page
-from django.utils.decorators import method_decorator
+
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from .paginations import PaginationClass
@@ -59,7 +58,6 @@ from .paginations import PaginationClass
 #         return Response("item Remove Success Fully", status=status.HTTP_202_ACCEPTED)
 
 
-@method_decorator(cache_page(60, key_prefix="cache-view"), name="get")
 class PostListGeneric(ModelViewSet):
     permission_classes = [
         IsAuthenticatedOrReadOnly,
@@ -78,7 +76,6 @@ class PostListGeneric(ModelViewSet):
     pagination_class = PaginationClass
 
 
-@method_decorator(cache_page(60, key_prefix="cache-view"), name="get")
 class PostCategoryListGeneric(ModelViewSet):
     permission_classes = [IsAuthenticated]
     parser_classes = (MultiPartParser,)
@@ -94,7 +91,6 @@ class PostCategoryListGeneric(ModelViewSet):
     pagination_class = PaginationClass
 
 
-@method_decorator(cache_page(60, key_prefix="cache-view"), name="get")
 class PostTagListGeneric(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     parser_classes = (MultiPartParser,)

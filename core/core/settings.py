@@ -68,12 +68,12 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -147,7 +147,9 @@ STATIC_ROOT = BASE_DIR / "static"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-STATICFILES_DIRS = [BASE_DIR / "staticfiles"]
+STATICFILES_DIRS = [
+    BASE_DIR / "staticfiles",
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -205,7 +207,3 @@ CACHES = {
 
 # __request origins__#
 CORS_ALLOWED_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_REGEX_WHITELIST = [
-    "*",
-]
