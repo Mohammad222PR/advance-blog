@@ -1,36 +1,40 @@
-# General modules
+#__General modules__#
 Django==4.2.6
 python-decouple==3.8
 djangorestframework
 Pillow
 django-cleanup
 
-# third party modules
+#__development modules__#
+gunicorn
+
+#__third party modules__#
 markdown       
 django-filter
 drf-yasg[validation]
 djangorestframework-simplejwt
 django-cors-headers
 djoser
-# delployment modules
+#__delployment modules__#
 
-# email third_party modules
+#__email third_party modules__#
 django-mail-templated
-# refactor and test modules
+#__refactor and test modules__#
 black
 flake8
 pytest
 pytest-django
 coreapi
 
-# random data creator
+#__random data creator__#
 Faker
 
 
-# background proccess and cache
+#__background proccess and cache__#
 celery
 django-celery-beat
 Redis
 
-# caching modules
+#__caching modules__#
 django-redis
+
