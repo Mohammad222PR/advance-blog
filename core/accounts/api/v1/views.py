@@ -8,11 +8,10 @@ from .serialiezers import (
     ActivationResendSerializer,
     LoginSerializer,
 )
-from django.views.decorators.vary import vary_on_cookie, vary_on_headers
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.contrib.auth import login
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework import status
@@ -23,7 +22,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
 from accounts.models.profiles import Profile
-from .permissions import IsVerified
 from django.contrib.auth import authenticate
 import requests
 # from mail_templated import send_mail

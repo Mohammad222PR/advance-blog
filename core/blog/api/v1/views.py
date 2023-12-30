@@ -1,12 +1,8 @@
-from rest_framework.views import Response
-from rest_framework.views import APIView
 from blog.models import *
 from .serializers import *
 from rest_framework.parsers import MultiPartParser
-from rest_framework.generics import ListCreateAPIView
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
-from django.shortcuts import get_object_or_404
 from .permissions import IsOwnerOrReadOnly
 from rest_framework.permissions import (
     IsAuthenticated,
