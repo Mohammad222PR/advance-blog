@@ -1,5 +1,5 @@
 from rest_framework import generics
-from ..serializers.change_password import (
+from ..serializers.change_pass import (
     ChangePasswordSerializer,
 )
 from rest_framework.parsers import MultiPartParser
