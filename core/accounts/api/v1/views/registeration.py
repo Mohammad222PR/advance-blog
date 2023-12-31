@@ -4,7 +4,7 @@ from ..serializers.register_login import (
     ActivationResendSerializer,
     LoginSerializer,
 )
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 from django.shortcuts import get_object_or_404
 from rest_framework.parsers import MultiPartParser
