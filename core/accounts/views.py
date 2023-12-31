@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .tasks import test
 import requests
-from django.core.cache import cache
 from django.views.decorators.cache import cache_page
 # Create your views here.
 
