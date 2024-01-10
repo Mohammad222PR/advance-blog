@@ -128,7 +128,7 @@ Distributed under the no License. See LICENSE.txt for more information.
 
 ## :handshake: Contact
 
-mohammadhossein eslami - [@twitter_handle](https://www.linkedin.com/in/mohammad--eslami) - mohammades13851@gmail.com
+mohammadhossein eslami - [@linkdin](https://www.linkedin.com/in/mohammad--eslami) - mohammades13851@gmail.com
 
 Project Link: [https://github.com/Mohammad222PR/advance-blog.git](https://github.com/Mohammad222PR/advance-blog.git)
 
