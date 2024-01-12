@@ -1,4 +1,3 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
 from accounts.models import *
 from rest_framework.validators import ValidationError
 from rest_framework.views import APIView
