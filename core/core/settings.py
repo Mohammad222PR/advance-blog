@@ -42,7 +42,6 @@ APPS = [
 PACKAGE = [
     "rest_framework.authtoken",
     "rest_framework",
-    "drf_yasg",
     "django_cleanup.apps.CleanupConfig",
     "django_filters",
     "rest_framework_simplejwt",
@@ -61,6 +60,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'drf_yasg',
     *PACKAGE,
     *APPS,
 ]
