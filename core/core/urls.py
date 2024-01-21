@@ -62,7 +62,6 @@ urlpatterns = [
         name="schema-redoc",
     ),
 
-    path('', include('wether.urls')),
 
 ]
 
