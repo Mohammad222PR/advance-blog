@@ -37,7 +37,6 @@ ALLOWED_HOSTS = config(
 APPS = [
     "accounts.apps.AccountsConfig",
     "blog.apps.BlogConfig",
-    "wether.apps.WetherConfig",
 ]
 
 PACKAGE = [
