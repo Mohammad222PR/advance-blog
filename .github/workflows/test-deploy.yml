@@ -22,9 +22,9 @@ jobs:
 
   Deploy:
     if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: Test
     name: Deploy
     runs-on: ubuntu-latest
-    needs: Test
     steps:
       - uses: actions/checkout@v3
       - name: Connect And Exucted Commands
@@ -34,8 +34,4 @@ jobs:
           password: ${{secrets.PASSWORD}}
           host: ${{secrets.HOST}}
           port: ${{secrets.PORT}}
-          script:
-            cd &{{secrets.PROJECT_PATH}}
-            docker-compose -f docker-compose-stage.yml stop
-            git pull
-            docker-compose -f docker-compose-stage.yml restart
+          script: ls
