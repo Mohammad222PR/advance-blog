@@ -1,0 +1,37 @@
+name: Django Project Test and Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  Test:
+    name: Test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Docker-Compose
+        run: docker-compose up -d
+      - name: Run Tests
+        run: docker exec backend sh -c "pytest ."
+
+  Deploy:
+    name: Deploy
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Connect And Exucted Commands
+        uses: appleboy/shh-action@master
+        with:
+          username: {{secrets.USERNAME}}
+          password: {{secrets.PASSWORD}}
+          host: {{secrets.HOST}}
+          port: {{secrets.PORT}}
+          script: ls

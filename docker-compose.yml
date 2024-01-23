@@ -48,7 +48,7 @@ services:
       - smtp4dev-data:/smtp4dev
     environment:
       - ServerOptions__HostName=smtp4dev
-      
+
   master:
     image: locustio/locust
     ports:
