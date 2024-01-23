@@ -21,17 +21,21 @@ jobs:
         run: docker exec backend sh -c "pytest ."
 
   Deploy:
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') }}
+    needs: Test
     name: Deploy
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Connect And Exucted Commands
-        uses: appleboy/shh-action@master
+        uses: appleboy/shh-action@v1.2.3
         with:
-          username: {{secrets.USERNAME}}
-          password: {{secrets.PASSWORD}}
-          host: {{secrets.HOST}}
-          port: {{secrets.PORT}}
-          script: ls
+          username: ${{secrets.USERNAME}}
+          password: ${{secrets.PASSWORD}}
+          host: ${{secrets.HOST}}
+          port: ${{secrets.PORT}}
+          script:
+            cd ${{secrets.PROJECT_PATH}}
+            docker-compose -f docker-compose-stage.yml stop
+            git pull
+            docker-compose -f docker-compose-stage.yml restart
