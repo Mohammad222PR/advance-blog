@@ -30,8 +30,8 @@ jobs:
       - name: Connect And Exucted Commands
         uses: appleboy/shh-action@master
         with:
-          username: {{secrets.USERNAME}}
-          password: {{secrets.PASSWORD}}
-          host: {{secrets.HOST}}
-          port: {{secrets.PORT}}
+          username: ${{secrets.USERNAME}}
+          password: ${{secrets.PASSWORD}}
+          host: ${{secrets.HOST}}
+          port: ${{secrets.PORT}}
           script: ls
