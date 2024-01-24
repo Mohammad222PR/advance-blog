@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Connect And Exucted Commands
-        uses: appleboy/shh-action@v1.2.3
+        uses: appleboy/shh-action@master
         with:
           username: ${{secrets.USERNAME}}
           password: ${{secrets.PASSWORD}}
